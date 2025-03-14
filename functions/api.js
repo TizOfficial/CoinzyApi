@@ -1,9 +1,29 @@
 export async function onRequest(context) {
     const apiRoutes = [
         {
-            route: "/api/random-dog",
-            description: "Gibt ein zufälliges Hundebild zurück.",
-            example: "https://coinzy-bot.pages.dev/api/random-dog"
+            route: "/api/cuddle",
+            description: "Gibt ein zufälliges kuschel gif zurück.",
+            example: "https://coinzy-bot.pages.dev/api/cuudle"
+        },
+        {
+            route: "/api/hug",
+            description: "Gibt ein zufälliges Umarmungs Gif zurück.",
+            example: "https://coinzy-bot.pages.dev/api/hug"
+        },
+        {
+            route: "/api/kiss",
+            description: "Gibt ein zufälliges Küss Gif zurück.",
+            example: "https://coinzy-bot.pages.dev/api/kiss"
+        },
+        {
+            route: "/api/pat",
+            description: "Gibt ein zufälliges klopf Gif zurück.",
+            example: "https://coinzy-bot.pages.dev/api/pat"
+        },
+        {
+            route: "/api/slap",
+            description: "Gibt eine zufälliges schlagen gif zurück.",
+            example: "https://coinzy-bot.pages.dev/api/slap"
         },
         {
             route: "/api/random-cat",
@@ -11,15 +31,31 @@ export async function onRequest(context) {
             example: "https://coinzy-bot.pages.dev/api/random-cat"
         },
         {
+            route: "/api/random-country",
+            description: "Gibt eine zufällige stadt zurück.",
+            example: "https://coinzy-bot.pages.dev/api/random-country"
+        },
+        {
+            route: "/api/random-dog",
+            description: "Gibt ein zufälliges Hundebild zurück.",
+            example: "https://coinzy-bot.pages.dev/api/random-dog"
+        },
+        {
+            route: "/api/random-gif",
+            description: "Gibt eine zufälligen gif zurück.",
+            example: "https://coinzy-bot.pages.dev/api/random-gif"
+        },
+        {
             route: "/api/random-meme",
             description: "Gibt ein zufälliges Meme zurück.",
             example: "https://coinzy-bot.pages.dev/api/random-meme"
         },
         {
-            route: "/api/random-country",
-            description: "Gibt eine zufällige stadt zurück.",
-            example: "https://coinzy-bot.pages.dev/api/random-country"
-        }
+            route: "/api/username",
+            description: "Gibt eine zufällige username zurück.",
+            example: "https://coinzy-bot.pages.dev/api/username"
+        },
+        
     ];
 
     const html = `
