@@ -1,1 +1,22 @@
 
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API-Key Verwaltung</title>
+    <script defer src="manage.js"></script>
+</head>
+<body>
+    <h1>API-Key Verwaltung</h1>
+
+    <label for="adminPassword">Admin-Passwort:</label>
+    <input type="password" id="adminPassword">
+    <button onclick="loadKeys()">Login</button>
+
+    <h2>API-Keys:</h2>
+    <ul id="keys">Bitte Passwort eingeben...</ul>
+
+    <button onclick="createKey()">Neuen API-Key erstellen</button>
+</body>
+</html>
