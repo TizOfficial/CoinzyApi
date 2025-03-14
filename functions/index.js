@@ -60,7 +60,7 @@ bot.run("DEIN_DISCORD_BOT_TOKEN")</code></pre>
 
                 <div class="section">
                     <h2>🤖 Nutzung mit Bot Designer for Discord (BDFD)</h2>
-                    <pre><code>$httpGet[https://coinzy-bot.pages.dev/api/random-dog]<br>
+                    <pre><code>$httpGet[https://coinzy-bot.pages.dev/api/random-dog]
                     $httpResult[image]</code></pre>
                 </div>
 
