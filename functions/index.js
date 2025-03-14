@@ -33,7 +33,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand() || interaction.commandName !== 'dog') return;
 
-    const response = await fetch('https://coinzy-api.pages.dev/api/random-dog.js');
+    const response = await fetch('https://coinzy-bot.pages.dev/api/random-dog');
     const data = await response.json();
 
     await interaction.reply({ content: data.image });
@@ -51,7 +51,7 @@ bot = discord.Bot()
 
 @bot.slash_command(name="dog", description="Zeigt ein zufälliges Hundebild")
 async def dog(ctx):
-    response = requests.get("https://coinzy-api.pages.dev/api/random-dog.js")
+    response = requests.get("https://coinzy-bot.pages.dev/api/random-dog")
     data = response.json()
     await ctx.respond(data["image"])
 
@@ -60,10 +60,11 @@ bot.run("DEIN_DISCORD_BOT_TOKEN")</code></pre>
 
                 <div class="section">
                     <h2>🤖 Nutzung mit Bot Designer for Discord (BDFD)</h2>
-                    <pre><code>$jsonRequest[https://coinzy-api.pages.dev/api/random-dog.js;image]</code></pre>
+                    <pre><code>$httpGet[https://coinzy-bot.pages.dev/api/random-dog]</code>
+                    <code>$httpResult[image]</code></pre>
                 </div>
 
-                <p><a href="/api.js">📜 Alle verfügbaren API-Routen ansehen</a></p>
+                <p><a href="/api/">📜 Alle verfügbaren API-Routen ansehen</a></p>
             </div>
         </body>
         </html>
