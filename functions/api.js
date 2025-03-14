@@ -1,24 +1,24 @@
 export async function onRequest(context) {
     const apiRoutes = [
         {
-            route: "/api/random-dog.js",
+            route: "/api/random-dog",
             description: "Gibt ein zufälliges Hundebild zurück.",
-            example: "/api/random-dog.js"
+            example: "https://coinzy-bot.pages.dev/api/random-dog"
         },
         {
-            route: "/api/nasaimage.js",
+            route: "/api/nasaimage",
             description: "Gibt das NASA-Bild des Tages zurück.",
-            example: "/api/nasaimage.js"
+            example: "https://coinzy-bot.pages.dev/api/nasaimage"
         },
         {
-            route: "/api/random-meme.js",
+            route: "/api/random-meme",
             description: "Gibt ein zufälliges Meme zurück.",
-            example: "/api/random-meme.js"
+            example: "https://coinzy-bot.pages.dev/api/random-meme"
         },
         {
-            route: "/api/minecraft-skin.js",
+            route: "/api/minecraft-skin",
             description: "Gibt einen zufälligen Minecraft-Skin zurück.",
-            example: "/api/minecraft-skin.js"
+            example: "https://coinzy-bot.pages.dev/api/minecraft-skin"
         }
     ];
 
