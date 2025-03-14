@@ -64,7 +64,7 @@ export async function onRequest(context) {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Coinzy API</title>
+            <title>Coinzy API - All Endpoints</title>
             <style>
                 body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
                 h1 { color: #ff6600; }
@@ -83,6 +83,7 @@ export async function onRequest(context) {
                     <a href="${route.example}" target="_blank">Beispiel aufrufen</a>
                 </div>
             `).join("")}
+            <h6>Lasst doch Gerne Im Footer Support Da, Support ist kein mord</h6>
         </body>
         </html>
     `;
