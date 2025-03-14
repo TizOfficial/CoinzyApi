@@ -66,6 +66,12 @@ bot.run("DEIN_DISCORD_BOT_TOKEN")</code></pre>
 
                 <p><a href="/api/">📜 Alle verfügbaren API-Routen ansehen</a></p>
             </div>
+             <div class="footer">
+                <p>© 2025 Coinzy API – Alle Rechte vorbehalten</p>
+                <a href="/api.js">API-Dokumentation</a> |
+                <a href="https://discord.gg/dein-support-server" target="_blank">Support Server</a> |
+                <a href="" target="_blank"></a>
+            </div>
         </body>
         </html>
     `;
