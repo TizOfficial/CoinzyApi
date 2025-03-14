@@ -6,9 +6,9 @@ export async function onRequest(context) {
             example: "https://coinzy-bot.pages.dev/api/random-dog"
         },
         {
-            route: "/api/nasaimage",
-            description: "Gibt das NASA-Bild des Tages zurück.",
-            example: "https://coinzy-bot.pages.dev/api/nasaimage"
+            route: "/api/random-cat",
+            description: "Gibt ein Zufälliges Katzenbild zurück.",
+            example: "https://coinzy-bot.pages.dev/api/random-cat"
         },
         {
             route: "/api/random-meme",
@@ -16,9 +16,9 @@ export async function onRequest(context) {
             example: "https://coinzy-bot.pages.dev/api/random-meme"
         },
         {
-            route: "/api/minecraft-skin",
-            description: "Gibt einen zufälligen Minecraft-Skin zurück.",
-            example: "https://coinzy-bot.pages.dev/api/minecraft-skin"
+            route: "/api/random-country",
+            description: "Gibt eine zufällige stadt zurück.",
+            example: "https://coinzy-bot.pages.dev/api/random-country"
         }
     ];
 
