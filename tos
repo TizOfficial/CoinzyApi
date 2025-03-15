@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coinzy API - Nutzungsbedingungen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f8f8f8;
+        }
+        .container {
+            max-width: 800px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        h2 {
+            color: #555;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+        p, ul {
+            line-height: 1.6;
+            color: #666;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .notice {
+            font-size: 0.9em;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📜 Nutzungsbedingungen</h1>
+        <p><strong>Letzte Aktualisierung:</strong> 14. März 2025</p>
+
+        <h2>1. Allgemeine Bestimmungen</h2>
+        <p>Die Coinzy API wird als kostenloser Dienst bereitgestellt. Durch die Nutzung der API akzeptierst du diese Nutzungsbedingungen.</p>
+        <p class="notice">⚠ Verstöße gegen diese Bedingungen können zur Sperrung oder zum dauerhaften Ausschluss von der Nutzung der API führen.</p>
+
+        <h2>2. Zulässige Nutzung</h2>
+        <p>Die Coinzy API darf ausschließlich unter folgenden Bedingungen genutzt werden:</p>
+        <ul>
+            <li>Die API darf nicht für illegale, betrügerische oder schädliche Zwecke verwendet werden.</li>
+            <li>Automatisierte Anfragen müssen innerhalb der vorgegebenen **Rate Limits** bleiben.</li>
+            <li>Die API darf nicht in einer Weise genutzt werden, die den Dienst beeinträchtigt oder stört.</li>
+            <li>Eine kommerzielle Nutzung ist nur nach ausdrücklicher Genehmigung erlaubt.</li>
+        </ul>
+
+        <h2>3. Sicherheit & Einschränkungen</h2>
+        <p>Zur Vermeidung von Missbrauch behält sich Coinzy API das Recht vor:</p>
+        <ul>
+            <li>API-Anfragen zu überwachen und bei auffälligem Verhalten einzuschränken.</li>
+            <li>Nutzer ohne Vorwarnung zu sperren, falls Sicherheitsrisiken erkannt werden.</li>
+            <li>IP-Adressen und andere Identifikatoren zu speichern, um Missbrauch zu verhindern.</li>
+        </ul>
+
+        <h2>4. Haftungsausschluss</h2>
+        <p>Die Coinzy API wird „wie sie ist“ bereitgestellt. Es gibt keine Garantie für die Verfügbarkeit, Richtigkeit oder Sicherheit der bereitgestellten Daten.</p>
+        <p>Wir haften nicht für Schäden oder Verluste, die durch die Nutzung der API entstehen.</p>
+
+        <h2>5. Änderungen der Nutzungsbedingungen</h2>
+        <p>Wir behalten uns das Recht vor, diese Nutzungsbedingungen jederzeit zu ändern. Änderungen treten mit der Veröffentlichung auf dieser Seite in Kraft.</p>
+        <p>Es liegt in deiner Verantwortung, die Bedingungen regelmäßig zu überprüfen.</p>
+
+        <h2>6. Kontakt</h2>
+        <p>Falls du Fragen oder Probleme hast, kannst du uns über unseren <a href="/support">Support</a> kontaktieren.</p>
+    </div>
+</body>
+</html>
