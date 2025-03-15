@@ -3,7 +3,7 @@ export async function onRequest(context) {
         {
             route: "/api/cuddle",
             description: "Gibt ein zufälliges kuschel gif zurück.",
-            example: "https://coinzy-bot.pages.dev/api/cuudle"
+            example: "https://coinzy-bot.pages.dev/api/cuddle"
         },
         {
             route: "/api/hug",
