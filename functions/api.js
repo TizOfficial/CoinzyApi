@@ -71,6 +71,7 @@ export async function onRequest(context) {
             example: "https://coinzy-bot.pages.dev/api/username"
         },
         
+        
     ];
 
     const html = `
