@@ -1,3 +1,4 @@
+
 export async function onRequest(context) {
   try {
     const response = await fetch("https://random.dog/woof.json");
