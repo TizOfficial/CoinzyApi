@@ -7,30 +7,33 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f8f8f8;
+            margin: 0;
+            background-color: #121212;
+            color: #ffffff;
             text-align: center;
         }
         .container {
             max-width: 800px;
-            background: white;
+            background: #1e1e1e;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            margin: auto;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+            margin: 40px auto;
         }
         h1 {
-            color: #333;
+            color: #ffffff;
         }
         .code {
-            background: #e9ecef;
+            background: #252525;
             padding: 10px;
             border-radius: 5px;
             text-align: left;
             overflow-x: auto;
+            font-family: monospace;
+            color: #00ff99;
         }
         a {
-            color: #007bff;
+            color: #00aaff;
             text-decoration: none;
         }
         a:hover {
@@ -39,6 +42,7 @@
         footer {
             margin-top: 20px;
             font-size: 14px;
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -62,19 +66,10 @@
         <h3>➡️ Discord.js</h3>
         <div class="code">
             <pre>
-const fetch = require("node-fetch");
-fetch("https://coinzyapi.com/API/random-dog")
-  .then(res => res.json())
-  .then(data => console.log(data.image));
-            </pre>
-        </div>
-
-        <h3>➡️ Python</h3>
-        <div class="code">
-            <pre>
-import requests
-data = requests.get("https://coinzyapi.com/API/random-dog").json()
-print(data["image"])
+$httpGet[https://coinzy-bot.pages.dev/api/random-dog]
+$title[Random Dog]
+$image[$httpResult[image]]
+$footer[API: coinzy-bot.pages.dev]
             </pre>
         </div>
 
