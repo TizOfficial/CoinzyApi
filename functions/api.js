@@ -51,6 +51,21 @@ export async function onRequest(context) {
             example: "https://coinzy-bot.pages.dev/api/random-meme"
         },
         {
+            route: "/api/minecraft-skin",
+            description: "Gibt einen zufälligen Minecraft Skin zurück.",
+            example: "https://coinzy-bot.pages.dev/api/minecraft-skin"
+        },
+        {
+            route: "/api/random-color",
+            description: "Gibt eine zufällige farbe zurück.",
+            example: "https://coinzy-bot.pages.dev/api/random-color"
+        },
+        {
+            route: "/api/random-trivia",
+            description: "Gibt eine zufällige frage zurück.",
+            example: "https://coinzy-bot.pages.dev/api/random-trivia"
+        },
+        {
             route: "/api/username",
             description: "Gibt eine zufällige username zurück.",
             example: "https://coinzy-bot.pages.dev/api/username"
