@@ -1,7 +1,6 @@
-import { onRequest as logRequest } from "../log.js";
 
 export async function onRequest(context) {
-  await logRequest(context); // Loggt die Anfrage
+  
   try {
     const response = await fetch("https://random.dog/woof.json");
     const data = await response.json();
