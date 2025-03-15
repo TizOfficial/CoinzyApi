@@ -5,20 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coinzy API - Deine All-in-One API</title>
 
-    <!-- Meta Tags für SEO -->
+    <!-- Meta Tags für SEO & Social Media -->
     <meta name="description" content="Die Coinzy API bietet dir zufällige Bilder, Memes, Emojis und mehr für dein Projekt oder deinen Discord-Bot. Einfach zu nutzen und kostenlos verfügbar.">
     <meta name="keywords" content="API, Coinzy API, Discord API, kostenlose API, Memes API, Gaming API, Bilder API, Developer API">
     <meta name="author" content="Coinzy API Team">
     <meta name="robots" content="index, follow">
 
-    <!-- Open Graph Meta Tags (für bessere Darstellung auf Social Media) -->
     <meta property="og:title" content="Coinzy API - Deine All-in-One API">
     <meta property="og:description" content="Nutze die Coinzy API für zufällige Bilder, Memes, Emojis und mehr in deinen Projekten!">
     <meta property="og:image" content="https://yourdomain.com/logo.png">
     <meta property="og:url" content="https://yourdomain.com">
     <meta property="og:type" content="website">
 
-    <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Coinzy API - Deine All-in-One API">
     <meta name="twitter:description" content="Nutze die Coinzy API für zufällige Bilder, Memes, Emojis und mehr in deinen Projekten!">
@@ -36,50 +34,86 @@
             color: #ffffff;
             text-align: center;
         }
-        nav {
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
             background: #1e1e1e;
             padding: 15px;
             display: flex;
-            justify-content: center;
-            gap: 20px;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
         }
-        nav a {
+
+        .logo {
+            font-size: 20px;
             color: #ffffff;
             text-decoration: none;
-            font-size: 16px;
-            padding: 10px;
+            font-weight: bold;
+            padding-left: 20px;
+        }
+
+        .menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 75%;
+            height: 100vh;
+            background: #1e1e1e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: left 0.4s ease-in-out;
+        }
+
+        .menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 15px 0;
             transition: 0.3s;
         }
-        nav a:hover {
+
+        .menu a:hover {
             color: #00aaff;
         }
+
+        .menu.active {
+            left: 0;
+        }
+
+        .menu-btn {
+            font-size: 24px;
+            color: #ffffff;
+            cursor: pointer;
+            padding-right: 20px;
+        }
+
         .hero {
-            padding: 60px 20px;
+            padding: 100px 20px 60px;
             background: #252525;
         }
+
         .hero h1 {
             font-size: 36px;
             color: #00aaff;
         }
+
         .hero p {
             font-size: 18px;
             margin-top: 10px;
             color: #bbbbbb;
         }
-        .info {
-            padding: 50px 20px;
-        }
-        .info h2 {
-            color: #00aaff;
-        }
-        .info p {
-            max-width: 800px;
-            margin: 10px auto;
-            line-height: 1.6;
-        }
+
         .cta {
             margin-top: 20px;
         }
+
         .cta a {
             display: inline-block;
             background: #00aaff;
@@ -90,28 +124,64 @@
             border-radius: 5px;
             transition: 0.3s;
         }
+
         .cta a:hover {
             background: #0088dd;
         }
+
+        .info {
+            padding: 50px 20px;
+        }
+
+        .info h2 {
+            color: #00aaff;
+        }
+
+        .info p {
+            max-width: 800px;
+            margin: 10px auto;
+            line-height: 1.6;
+        }
+
         footer {
             margin-top: 40px;
             padding: 20px;
             background: #1e1e1e;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+            .hero p {
+                font-size: 16px;
+            }
+            .cta a {
+                font-size: 16px;
+                padding: 10px 16px;
+            }
         }
     </style>
 </head>
 <body>
 
     <!-- Navigation -->
-    <nav>
-        <a href="/">🏠 Home</a>
-        <a href="/team">👥 Team</a>
-        <a href="/changelogs">📜 Changelogs</a>
-        <a href="/partners">🤝 Partner</a>
-        <a href="/tos">⚖️ TOS</a>
-        <a href="/privacy">🔒 Datenschutz</a>
-        <a href="/support">📩 Support</a>
+    <nav class="navbar">
+        <a href="/" class="logo">Coinzy API</a>
+        <span class="menu-btn" onclick="toggleMenu()">☰</span>
     </nav>
+
+    <!-- Ausklappbares Menü -->
+    <div class="menu" id="menu">
+        <a href="/" onclick="toggleMenu()">🏠 Home</a>
+        <a href="/team" onclick="toggleMenu()">👥 Team</a>
+        <a href="/changelogs" onclick="toggleMenu()">📜 Changelogs</a>
+        <a href="/partners" onclick="toggleMenu()">🤝 Partner</a>
+        <a href="/tos" onclick="toggleMenu()">⚖️ TOS</a>
+        <a href="/privacy" onclick="toggleMenu()">🔒 Datenschutz</a>
+        <a href="/support" onclick="toggleMenu()">📩 Support</a>
+    </div>
 
     <!-- Hero Bereich -->
     <div class="hero">
@@ -143,6 +213,14 @@
     <footer>
         <p>&copy; 2025 Coinzy API - Alle Rechte vorbehalten.</p>
     </footer>
+
+    <!-- JavaScript für das Menü -->
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("menu");
+            menu.classList.toggle("active");
+        }
+    </script>
 
 </body>
 </html>
