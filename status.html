@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coinzy API - Status</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #121212;
+            color: white;
+            padding: 20px;
+        }
+        .status-box {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+        }
+        .status {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .online { color: #4CAF50; }
+        .offline { color: #f44336; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #444;
+        }
+        th {
+            background: #2a2a2a;
+        }
+    </style>
+</head>
+<body>
+    <div class="status-box">
+        <h1>🚀 Coinzy API Status</h1>
+        <p>Letzte Aktualisierung: <span id="lastUpdated">Lädt...</span></p>
+        <table>
+            <tr>
+                <th>Endpoint</th>
+                <th>Status</th>
+                <th>Antwortzeit (ms)</th>
+                <th>📊 Anfragen</th>
+            </tr>
+            <tbody id="statusTable"></tbody>
+        </table>
+    </div>
+
+    <script>
+        const endpoints = [
+            { name: "Random Dog", url: "/api/random-dog" },
+            { name: "Random Meme", url: "/api/random-meme" },
+            { name: "Kiss", url: "/api/kiss" },
+            { name: "Hug", url: "/api/hug" },
+            { name: "Thumbsup", url: "/api/thumbsup" }
+        ];
+
+        async function checkAPIStatus() {
+            let tableHTML = "";
+            for (const endpoint of endpoints) {
+                const startTime = performance.now();
+                let status = "🔴 Offline";
+                let latency = "-";
+                let totalRequests = Math.floor(Math.random() * 10000) + 100; // Simulierte Anfragen
+
+                try {
+                    const response = await fetch(endpoint.url);
+                    if (response.ok) {
+                        latency = Math.round(performance.now() - startTime);
+                        status = "🟢 Online";
+                    }
+                } catch (error) {}
+
+                tableHTML += `
+                    <tr>
+                        <td>${endpoint.name}</td>
+                        <td class="${status.includes('Online') ? 'online' : 'offline'}">${status}</td>
+                        <td>${latency}</td>
+                        <td>${totalRequests}</td>
+                    </tr>
+                `;
+            }
+            document.getElementById('statusTable').innerHTML = tableHTML;
+            document.getElementById('lastUpdated').innerHTML = new Date().toLocaleTimeString();
+        }
+
+        checkAPIStatus();
+        setInterval(checkAPIStatus, 10000); // Aktualisiert alle 10 Sekunden
+    </script>
+</body>
+</html>
