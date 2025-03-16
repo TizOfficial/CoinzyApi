@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<nav class="navbar">
+
+        <a href="/" class="logo">Coinzy API</a>
+        <span class="menu-btn" onclick="toggleMenu()">☰</span>
+    </nav>
+
+    <!-- Ausklappbares Menü -->
+    <div class="menu" id="menu">
+        <a href="/" onclick="toggleMenu()">🏠 Home</a>
+        <a href="/team" onclick="toggleMenu()">👥 Team</a>
+        <a href="/changelogs" onclick="toggleMenu()">📜 Changelogs</a>
+        <a href="/partners" onclick="toggleMenu()">🤝 Partner</a>
+        <a href="/tos" onclick="toggleMenu()">⚖️ TOS</a>
+        <a href="/privacy" onclick="toggleMenu()">🔒 Datenschutz</a>
+        <a href="/support" onclick="toggleMenu()">📩 Support</a>
+    </div>
+    <style>
+    
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #121212;
+            color: #fff;
+            text-align: center;
+        }
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #1e1e1e;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 20px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            padding-left: 20px;
+        }
+
+        .menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 75%;
+            height: 100vh;
+            background: #1e1e1e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: left 0.4s ease-in-out;
+        }
+
+        .menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 15px 0;
+            transition: 0.3s;
+        }
+
+        .menu a:hover {
+            color: #00aaff;
+        }
+
+        .menu.active {
+            left: 0;
+        }
+
+        .menu-btn {
+            font-size: 24px;
+            color: #ffffff;
+            cursor: pointer;
+            padding-right: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+        input, textarea, select{
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background: #222;
+            color: #fff;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <h1>🚀 Custom Endpoints Vorschlagen</h1>
+        <p>Hast du eine eigene API die du für uns bereitstellen möchtest? 
+        Kontaktiere uns hier:</p>
+        <form id="supportForm" action="https://formspree.io/f/xldjdbdn" method="POST">
+        <label for="endpointName">Endpoint-Name:</label>
+        <input type="text" id="endpointName" name="endpointName" required>
+
+        <label for="description">Beschreibung:</label>
+        <textarea id="description" name="description" rows="4" required></textarea>
+
+        <label for="responseType">Antwortformat:</label>
+        <select id="responseType" name="responseType">
+            <option value="JSON">JSON</option>
+            <option value="Text">Text</option>
+            <option value="Bild">Bild</option>
+        </select>
+
+        <label for="notes">Anmerkungen (optional):</label>
+        <textarea id="notes" name="notes" rows="2"></textarea>
+            <button type="submit">Absenden</button>
+        </form>
+    </div>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("menu");
+            menu.classList.toggle("active");
+        }
+</script>
+</body>
+</html>
