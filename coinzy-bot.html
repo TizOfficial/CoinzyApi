@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coinzy Bot - Dein Discord Helfer</title>
+
+
+<nav class="navbar">
+        <a href="/" class="logo">Coinzy API</a>
+        <span class="menu-btn" onclick="toggleMenu()">☰</span>
+    </nav>
+
+    <!-- Ausklappbares Menü -->
+    <div class="menu" id="menu">
+        <a href="/" onclick="toggleMenu()">🏠 Home</a>
+        <a href="/team" onclick="toggleMenu()">👥 Team</a>
+        <a href="/changelogs" onclick="toggleMenu()">📜 Changelogs</a>
+        <a href="/partners" onclick="toggleMenu()">🤝 Partner</a>
+        <a href="/tos" onclick="toggleMenu()">⚖️ TOS</a>
+        <a href="/privacy" onclick="toggleMenu()">🔒 Datenschutz</a>
+        <a href="/support" onclick="toggleMenu()">📩 Support</a>
+    </div>
+
+  
+<style>
+  /* Allgemeines Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #fff;
+    text-align: center;
+}
+
+  /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #1e1e1e;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 20px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            padding-left: 20px;
+        }
+
+        .menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 75%;
+            height: 100vh;
+            background: #1e1e1e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: left 0.4s ease-in-out;
+        }
+
+        .menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 15px 0;
+            transition: 0.3s;
+        }
+
+        .menu a:hover {
+            color: #00aaff;
+        }
+
+        .menu.active {
+            left: 0;
+        }
+
+        .menu-btn {
+            font-size: 24px;
+            color: #ffffff;
+            cursor: pointer;
+            padding-right: 20px;
+        }
+
+/* Header */
+header {
+    padding: 50px 20px;
+}
+
+header h1 {
+    font-size: 2.5em;
+}
+
+header p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ffcc00;
+    color: #000;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #e6b800;
+}
+
+/* Features */
+.features {
+    padding: 50px 20px;
+}
+
+.features h2 {
+    font-size: 2em;
+}
+
+.feature-list {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.feature {
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 8px;
+    width: 250px;
+}
+
+/* Footer */
+footer {
+    background-color: #1a1a1a;
+    padding: 20px;
+    margin-top: 30px;
+}
+  
+</style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Coinzy Bot</div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/api">API</a></li>
+            <li><a href="/docs">Docs</a></li>
+            <li><a href="/coinzy-bot-commands">Commands</a></li>
+            <li><a href="/support">Support</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>Coinzy Bot</h1>
+        <p>Ein leistungsstarker Discord-Bot für deine Community!</p>
+        <a href="https://discord.com/oauth2/authorize?client_id=DEIN_BOT_ID&permissions=8&scope=bot" class="btn">Bot einladen</a>
+    </header>
+
+    <section class="features">
+        <h2>Warum Coinzy Bot?</h2>
+        <div class="feature-list">
+            <div class="feature">
+                <h3>🔧 Nützliche Commands</h3>
+                <p>Viele praktische Befehle für Moderation, Fun und mehr.</p>
+            </div>
+            <div class="feature">
+                <h3>⚡ Schnelle Performance</h3>
+                <p>Läuft stabil und effizient auf unseren Servern.</p>
+            </div>
+            <div class="feature">
+                <h3>🎉 Unterhaltung</h3>
+                <p>Memes, Reaktionen und coole Features für deine Community.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Coinzy API | <a href="/tos">TOS</a> | <a href="/privacy">Privacy Policy</a></p>
+    </footer>
+
+<script>
+        function toggleMenu() {
+            const menu = document.getElementById("menu");
+            menu.classList.toggle("active");
+        }
+</script>
+
+  
+</body>
+</html>
