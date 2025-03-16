@@ -4,18 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coinzy API - Nutzungsbedingungen</title>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/" class="logo">Coinzy API</a>
+        <span class="menu-btn" onclick="toggleMenu()">☰</span>
+    </nav>
+
+    <!-- Ausklappbares Menü -->
+    <div class="menu" id="menu">
+        <a href="/" onclick="toggleMenu()">🏠 Home</a>
+        <a href="/team" onclick="toggleMenu()">👥 Team</a>
+        <a href="/changelogs" onclick="toggleMenu()">📜 Changelogs</a>
+        <a href="/partners" onclick="toggleMenu()">🤝 Partner</a>
+        <a href="/tos" onclick="toggleMenu()">⚖️ TOS</a>
+        <a href="/privacy" onclick="toggleMenu()">🔒 Datenschutz</a>
+        <a href="/support" onclick="toggleMenu()">📩 Support</a>
+    </div>
+
+    
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 40px;
-            background-color: #f8f8f8;
+            background-color: #121212;
         }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #1e1e1e;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 20px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            padding-left: 20px;
+        }
+
+        .menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 75%;
+            height: 100vh;
+            background: #1e1e1e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: left 0.4s ease-in-out;
+        }
+
+        .menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 15px 0;
+            transition: 0.3s;
+        }
+
+        .menu a:hover {
+            color: #00aaff;
+        }
+
+        .menu.active {
+            left: 0;
+        }
+
+        .menu-btn {
+            font-size: 24px;
+            color: #ffffff;
+            cursor: pointer;
+            padding-right: 20px;
+        }
+        
         .container {
             max-width: 800px;
-            background: white;
+            background: #1e1e1e;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+            margin: 40px auto;
         }
         h1 {
             text-align: center;
@@ -83,5 +162,11 @@
         <h2>6. Kontakt</h2>
         <p>Falls du Fragen oder Probleme hast, kannst du uns über unseren <a href="/support">Support</a> kontaktieren.</p>
     </div>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("menu");
+            menu.classList.toggle("active");
+        }
+    </script>
 </body>
 </html>
