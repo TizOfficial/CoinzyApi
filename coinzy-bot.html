@@ -150,6 +150,26 @@ footer {
     padding: 20px;
     margin-top: 30px;
 }
+    @media screen and (max-width: 768px) {
+    .navbar ul {
+        display: none;
+        flex-direction: column;
+        background: #1a1a1a;
+        width: 100%;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        padding: 10px 0;
+    }
+
+    .navbar ul.show {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+            }
   
 </style>
 </head>
