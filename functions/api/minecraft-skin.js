@@ -4,7 +4,7 @@ export async function onRequest(context) {
     const skinUrl = `https://mineskin.eu/body/${randomPlayer}`;
     const downloadUrl = `https://mineskin.eu/download/${randomPlayer}`;
 
-    return new Response(JSON.stringify({ player: randomPlayer, skin: skinUrl }), {
+    return new Response(JSON.stringify({ player: randomPlayer, skin: skinUrl , download: downloadUrl }), {
         headers: { "Content-Type": "application/json" }
     });
 }
