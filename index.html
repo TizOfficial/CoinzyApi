@@ -36,15 +36,21 @@
     <script>
         const blockedCountries = ["RU", "CN", "DE"];
 
-function checkCountry(userIP) {
-    fetch(`https://ipapi.co/${userIP}/json/`)
-        .then(res => res.json())
-        .then(data => {
-            if (blockedCountries.includes(data.country_code)) {
-                window.location.href = "/403";
-            }
-        });
+async function checkCountry() {
+    try {
+        const res = await fetch("https://ipapi.co/json/");
+        const data = await res.json();
+
+        if (blockedCountries.includes(data.country_code)) {
+            window.location.href = "/403";
+        }
+    } catch (error) {
+        console.error("Fehler beim Abrufen der IP-Info:", error);
+    }
 }
+
+// Direkt nach dem Laden der Seite ausführen
+checkCountry();
     </script>
 
     
