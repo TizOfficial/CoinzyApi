@@ -31,6 +31,22 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6114040919647313"
      crossorigin="anonymous"></script>
 
+
+
+    <script>
+        const blockedCountries = ["RU", "CN", "DE"];
+
+function checkCountry(userIP) {
+    fetch(`https://ipapi.co/${userIP}/json/`)
+        .then(res => res.json())
+        .then(data => {
+            if (blockedCountries.includes(data.country_code)) {
+                window.location.href = "/403";
+            }
+        });
+}
+    </script>
+
     
     <style>
         * {
