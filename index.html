@@ -256,7 +256,16 @@ checkIP();
     text-decoration: none;
     border-radius: 5px;
 }
-
+#popup-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: inherit;
+}
 
 
         
@@ -281,6 +290,7 @@ checkIP();
     <div id="popup" class="popup">
         <div class="popup-content">
             <span class="close-btn">&times;</span>
+               <button id="popup-close">✖</button>
             <h2>🔥 Werbung / Ankündigung</h2>
             <p>Hier kannst du deine eigene Werbung oder Infos einfügen.</p>
             <a href="https://example.com" class="popup-btn">Mehr erfahren</a>
@@ -360,6 +370,23 @@ checkIP();
     closeBtn.addEventListener("click", function () {
         popup.style.display = "none";
         localStorage.setItem("popupSeen", "true"); // Speichern, dass es schon gesehen wurde
+        document.addEventListener("DOMContentLoaded", function () {
+    const popup = document.getElementById("popup");
+    const closeBtn = document.getElementById("popup-close");
+
+    // Überprüfen, ob das Popup bereits geschlossen wurde (LocalStorage)
+    if (!localStorage.getItem("popupClosed")) {
+        setTimeout(() => {
+            popup.style.display = "flex"; // Zeigt das Popup nach einer kurzen Verzögerung
+        }, 1000);
+    }
+
+    // Schließen-Button Event
+    closeBtn.addEventListener("click", function () {
+        popup.style.display = "none";
+        localStorage.setItem("popupClosed", "true"); // Speichert, dass das Popup geschlossen wurde
+    });
+});
     });
 });
     </script>
