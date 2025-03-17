@@ -7,8 +7,8 @@ export async function onRequest(context) {
     const keysData = await keysResponse.json();
 
     if (!apiKey || !keysData.keys.includes(apiKey)) {
-        return new Response(await fetch("https://coinzy-bot.pages.dev/403"));
+        window.location.href = "/403"; // Weiterleitung auf Fehlerseite("https://coinzy-bot.pages.dev/403"));
     }
 
-    return new Response(await fetch("https://coinzy-bot.pages.dev/api"));
+    window.location.href = "/api"; // Weiterleitung auf Fehlerseite("https://coinzy-bot.pages.dev/api"));
 }
