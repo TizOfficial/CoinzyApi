@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invite-System</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Dein Invite-Link</h1>
+        <button id="generateInvite">Invite-Link generieren</button>
+        <p id="inviteLink"></p>
+    </div>
+
+    <script>
+        document.getElementById("generateInvite").addEventListener("click", async () => {
+            const response = await fetch("/api/invite/create");
+            const data = await response.json();
+            document.getElementById("inviteLink").textContent = data.inviteLink;
+        });
+    </script>
+</body>
+</html>
