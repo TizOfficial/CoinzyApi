@@ -1,6 +1,41 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+
+<script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js';
+
+    // Supabase-Daten
+    const SUPABASE_URL = "https://tetqpmeophkzlnhdcrqs.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRldHFwbWVvcGhremxuaGRjcnFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIxNTk4MTIsImV4cCI6MjA1NzczNTgxMn0.FbND9RgLTd3bD6WAvHsfbNSqxOMulfmojbZfaHgbylU";
+
+    // Supabase-Client erstellen
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Besucherdaten erfassen
+    async function trackVisitor() {
+        const ipResponse = await fetch('https://api64.ipify.org?format=json');
+        const { ip } = await ipResponse.json();
+
+        const userAgent = navigator.userAgent;
+        const referrer = document.referrer || "Direktzugriff";
+        const page = window.location.pathname;
+        
+        // Daten in Supabase speichern
+        const { error } = await supabase.from('visitors').insert([
+            { ip, user_agent: userAgent, referrer, page, timestamp: new Date() }
+        ]);
+
+        if (error) {
+            console.error('Fehler beim Speichern:', error);
+        }
+    }
+
+    trackVisitor();
+</script>
+
+
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coinzy API - Deine All-in-One API</title>
