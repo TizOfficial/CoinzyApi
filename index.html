@@ -217,6 +217,49 @@ checkIP();
                 padding: 10px 16px;
             }
         }
+
+.popup {
+    display: none; /* Standardmäßig ausgeblendet */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background: #222;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    max-width: 400px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.popup-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #ff9800;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+
+
+        
     </style>
 
 <!-- Google tag (gtag.js) -->
@@ -234,7 +277,19 @@ checkIP();
     
 </head>
 <body>
+    <!-- Popup -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>🔥 Werbung / Ankündigung</h2>
+            <p>Hier kannst du deine eigene Werbung oder Infos einfügen.</p>
+            <a href="https://example.com" class="popup-btn">Mehr erfahren</a>
+        </div>
+    </div>
 
+
+
+    
     <!-- Navigation -->
     <nav class="navbar">
         <a href="/" class="logo">Coinzy API</a>
@@ -290,6 +345,23 @@ checkIP();
             const menu = document.getElementById("menu");
             menu.classList.toggle("active");
         }
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+    const popup = document.getElementById("popup");
+    const closeBtn = document.querySelector(".close-btn");
+
+    // Prüfe, ob das Popup schon gesehen wurde (Local Storage)
+    if (!localStorage.getItem("popupSeen")) {
+        popup.style.display = "flex"; // Zeige das Popup
+    }
+
+    // Popup schließen
+    closeBtn.addEventListener("click", function () {
+        popup.style.display = "none";
+        localStorage.setItem("popupSeen", "true"); // Speichern, dass es schon gesehen wurde
+    });
+});
     </script>
 
 </body>
