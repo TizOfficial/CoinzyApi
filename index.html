@@ -354,7 +354,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeBtn = document.getElementById("popup-close");
 
     // Überprüfen, ob das Popup bereits geschlossen wurde (LocalStorage)
-    if (!localStorage.getItem("popupClosed")) {
+    if (localStorage.getItem("popupClosed")) {
         setTimeout(() => {
             popup.style.display = "flex"; // Zeigt das Popup nach 1 Sekunde
         }, 1000);
