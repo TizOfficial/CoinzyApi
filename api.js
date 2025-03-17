@@ -12,3 +12,18 @@ export async function onRequest(context) {
 
     window.location.href = "/api"; // Weiterleitung auf Fehlerseite("https://coinzy-bot.pages.dev/api"));
 }
+
+
+
+
+const blockedCountries = ["RU", "CN", "DE"];
+
+function checkCountry(userIP) {
+    fetch(`https://ipapi.co/${userIP}/json/`)
+        .then(res => res.json())
+        .then(data => {
+            if (blockedCountries.includes(data.country_code)) {
+                window.location.href = "/403";
+            }
+        });
+}
