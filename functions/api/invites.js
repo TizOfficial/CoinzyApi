@@ -57,8 +57,8 @@ export async function onRequest(context) {
                 name: data.channel.name,
                 type: data.channel.type,
                 nsfw: data.channel.nsfw,
-                position: data.channel.position,
-                parent_id: data.channel.parent_id
+                position: data.channel.position ?? "Not available",
+                parent_id: data.channel.parent_id ?? "Not available"
             } : null,
             stage_instance: data.stage_instance ? {
                 members: data.stage_instance.members.length,
