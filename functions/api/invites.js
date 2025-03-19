@@ -41,8 +41,8 @@ export async function onRequest(context) {
                 features: data.guild.features,
                 premium_tier: data.guild.premium_tier,
                 premium_subscription_count: data.guild.premium_subscription_count || 0,
-                member_count: data.approximate_member_count || 0,
-                presence_count: data.approximate_presence_count || 0,
+                approximate_member_count: data.approximate_member_count || 0,
+                approximate_presence_count: data.approximate_presence_count || 0,
                 welcome_screen: data.guild.welcome_screen ? {
                     description: data.guild.welcome_screen.description,
                     welcome_channels: data.guild.welcome_screen.welcome_channels.map(ch => ({
