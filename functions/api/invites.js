@@ -20,17 +20,9 @@ export async function onRequest(context) {
             });
         }
 
-        // Erstellungsdatum berechnen (Snowflake)
-        let createdTimestamp = null;
-        if (data.guild && data.guild.id) {
-            const snowflake = BigInt(data.guild.id);
-            createdTimestamp = new Date(Number((snowflake >> 22n) + 1420070400000n)).toISOString();
-        }
-
         return new Response(JSON.stringify({
             invite_code: inviteCode,
-            created_at: createdTimestamp || "Unbekannt",
-            expires_at: data.expires_at || "Permanent",
+            created_at: data.expires_at || "Permanent",
             inviter: data.inviter ? {
                 id: data.inviter.id,
                 username: data.inviter.username,
@@ -40,13 +32,37 @@ export async function onRequest(context) {
             guild: data.guild ? {
                 id: data.guild.id,
                 name: data.guild.name,
-                created_at: createdTimestamp || "Unbekannt",
                 description: data.guild.description || "Keine Beschreibung",
                 icon: data.guild.icon ? `https://cdn.discordapp.com/icons/${data.guild.id}/${data.guild.icon}.png` : null,
-                members: {
-                    total: data.approximate_member_count ?? "Nicht verfügbar",
-                    online: data.approximate_presence_count ?? "Nicht verfügbar"
-                }
+                banner: data.guild.banner ? `https://cdn.discordapp.com/banners/${data.guild.id}/${data.guild.banner}.png` : null,
+                splash: data.guild.splash ? `https://cdn.discordapp.com/splashes/${data.guild.id}/${data.guild.splash}.png` : null,
+                verification_level: data.guild.verification_level,
+                nsfw: data.guild.nsfw_level > 0,
+                features: data.guild.features,
+                premium_tier: data.guild.premium_tier,
+                premium_subscription_count: data.guild.premium_subscription_count || 0,
+                approximate_member_count: data.approximate_member_count || 0,
+                approximate_presence_count: data.approximate_presence_count || 0,
+                welcome_screen: data.guild.welcome_screen ? {
+                    description: data.guild.welcome_screen.description,
+                    welcome_channels: data.guild.welcome_screen.welcome_channels.map(ch => ({
+                        channel_id: ch.channel_id,
+                        description: ch.description,
+                        emoji: ch.emoji
+                    }))
+                } : null
+            } : null,
+            channel: data.channel ? {
+                id: data.channel.id,
+                name: data.channel.name,
+                type: data.channel.type,
+                nsfw: data.channel.nsfw,
+                position: data.channel.position,
+                parent_id: data.channel.parent_id
+            } : null,
+            stage_instance: data.stage_instance ? {
+                members: data.stage_instance.members.length,
+                topic: data.stage_instance.topic
             } : null
         }), {
             status: 200,
