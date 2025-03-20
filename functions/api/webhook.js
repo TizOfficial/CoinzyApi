@@ -1,31 +1,31 @@
-export async function onRequest(context) {
-    const STRIPE_SECRET = context.env.STRIPE_SECRET;
-    const endpointSecret = context.env.STRIPE_WEBHOOK_SECRET;
-    
-    const body = await context.request.text();
-    const sig = context.request.headers.get('stripe-signature');
+export async function onRequestPost(context) {
+    const STRIPE_SECRET = context.env.STRIPE_SECRET; // In Cloudflare Pages als Environment Variable speichern
 
-    // Webhook-Signatur validieren
-    const crypto = await import('node:crypto');
-    const hmac = crypto.createHmac("sha256", endpointSecret);
-    hmac.update(body);
-    const expectedSignature = `t=${Date.now()},v1=${hmac.digest("hex")}`;
+    const body = await context.request.json(); // Body auslesen
+    const signature = context.request.headers.get("stripe-signature");
 
-    if (sig !== expectedSignature) {
-        return new Response(JSON.stringify({ error: "Invalid signature" }), { status: 400 });
-    }
+    // Webhook Secret von Stripe holen (ersetze durch dein echtes Webhook Secret)
+    const webhookSecret = context.env.STRIPE_WEBHOOK_SECRET; 
 
-    // Stripe-Event parsen
-    const event = JSON.parse(body);
-    
-    if (event.type === 'checkout.session.completed') {
-        const userId = event.data.object.metadata?.user_id;
-
-        if (userId) {
-            // Speichere die Zahlung in Cloudflare KV
-            await context.env.PAYMENTS.put(userId, "paid"); 
+    // Stripe API-Aufruf zur Verifizierung der Signatur
+    const response = await fetch("https://api.stripe.com/v1/events/" + body.id, {
+        headers: {
+            Authorization: `Bearer ${STRIPE_SECRET}`
         }
+    });
+
+    if (response.status !== 200) {
+        return new Response(JSON.stringify({ error: "Ungültige Anfrage" }), { status: 400 });
     }
 
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
+    const event = await response.json();
+
+    if (event.type === "checkout.session.completed") {
+        const session = event.data.object;
+        
+        // Hier kannst du die Zahlung weiterverarbeiten
+        return new Response(JSON.stringify({ success: true, message: "Zahlung erfolgreich!" }), { status: 200 });
+    }
+
+    return new Response(JSON.stringify({ success: false, message: "Kein relevantes Event" }), { status: 400 });
 }
