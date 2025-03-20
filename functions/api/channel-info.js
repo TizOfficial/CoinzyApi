@@ -29,12 +29,16 @@ export async function onRequest(context) {
 
         return new Response(JSON.stringify({
             id: data.id,
-            name: data.name,
+            name: data.name || "Kein Name",
             type: data.type,
             topic: data.topic || "Kein Thema",
-            nsfw: data.nsfw,
-            position: data.position,
-            created_at: new Date((BigInt(data.id) >> 22n) + 1420070400000n).toISOString()
+            nsfw: data.nsfw || false,
+            position: data.position || 0,
+            parent_id: data.parent_id || null, // Falls der Channel in einer Kategorie ist
+            rate_limit_per_user: data.rate_limit_per_user || 0, // Slowmode in Sekunden
+            bitrate: data.bitrate || null, // Nur für Voice-Channels
+            user_limit: data.user_limit || null, // Maximale User (nur Voice-Channels)
+            created_at: new Date(parseInt(data.id) / 4194304 + 1420070400000).toISOString()
         }), {
             status: 200,
             headers: { "Content-Type": "application/json" }
