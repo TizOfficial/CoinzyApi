@@ -43,6 +43,11 @@ export async function onRequest(context) {
         const forumChannels = channels.filter(c => c.type === 15).length;
         const totalChannels = channels.length;
 
+        // Erstellungsdatum des Servers berechnen (ohne BigInt)
+        const discordEpoch = 1420070400000;
+        const timestamp = Number(guildData.id) / 4194304 + discordEpoch;
+        const createdAt = new Date(timestamp).toISOString();
+
         return new Response(JSON.stringify({
             id: guildData.id,
             name: guildData.name,
@@ -64,7 +69,7 @@ export async function onRequest(context) {
             emojis_count: guildData.emojis ? guildData.emojis.length : 0,
             stickers_count: guildData.stickers ? guildData.stickers.length : 0,
             features: guildData.features || [],
-            created_at: new Date((BigInt(guildData.id) >> 22n) + 1420070400000n).toISOString(),
+            created_at: createdAt,
             // Channel-Statistiken
             channels: {
                 total: totalChannels,
@@ -82,4 +87,4 @@ export async function onRequest(context) {
     } catch (error) {
         return new Response(JSON.stringify({ error: "Interner Fehler", details: error.message }), { status: 500 });
     }
-          }
+}
