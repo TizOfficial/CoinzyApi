@@ -13,7 +13,7 @@ export async function onRequest(context) {
     }
 
     try {
-        // Server-Info abrufen
+        // Server-Infos abrufen
         const guildResponse = await fetch(`https://discord.com/api/v10/guilds/${guildId}?with_counts=true`, {
             headers: { Authorization: `Bot ${botToken}` }
         });
@@ -29,23 +29,21 @@ export async function onRequest(context) {
             headers: { Authorization: `Bot ${botToken}` }
         });
 
-        if (!channelsResponse.ok) {
-            return new Response(JSON.stringify({ error: "Konnte die Kanäle nicht abrufen." }), { status: 403 });
-        }
+        const channels = channelsResponse.ok ? await channelsResponse.json() : [];
 
-        const channels = await channelsResponse.json();
+        // Berechnungen der Kanäle
+        const channelStats = {
+            total: channels.length,
+            text: channels.filter(c => c.type === 0).length,
+            voice: channels.filter(c => c.type === 2).length,
+            categories: channels.filter(c => c.type === 4).length,
+            stage: channels.filter(c => c.type === 13).length,
+            forum: channels.filter(c => c.type === 15).length
+        };
 
-        // Channel-Statistiken berechnen
-        const textChannels = channels.filter(c => c.type === 0).length;
-        const voiceChannels = channels.filter(c => c.type === 2).length;
-        const categoryChannels = channels.filter(c => c.type === 4).length;
-        const stageChannels = channels.filter(c => c.type === 13).length;
-        const forumChannels = channels.filter(c => c.type === 15).length;
-        const totalChannels = channels.length;
-
-        // Erstellungsdatum des Servers berechnen (ohne BigInt)
+        // Berechnung des Erstellungsdatums
         const discordEpoch = 1420070400000;
-        const timestamp = Number(guildData.id) / 4194304 + discordEpoch;
+        const timestamp = parseInt(guildData.id) / 4194304 + discordEpoch;
         const createdAt = new Date(timestamp).toISOString();
 
         return new Response(JSON.stringify({
@@ -56,9 +54,10 @@ export async function onRequest(context) {
             banner_url: guildData.banner ? `https://cdn.discordapp.com/banners/${guildData.id}/${guildData.banner}.png` : null,
             splash_url: guildData.splash ? `https://cdn.discordapp.com/splashes/${guildData.id}/${guildData.splash}.png` : null,
             owner_id: guildData.owner_id,
-            region: guildData.region || "Automatisch",
-            member_count: guildData.approximate_member_count || "Nicht verfügbar",
-            online_members: guildData.approximate_presence_count || "Nicht verfügbar",
+            preferred_locale: guildData.preferred_locale || "Unbekannt",
+            system_channel_id: guildData.system_channel_id || "Nicht verfügbar",
+            member_count: guildData.approximate_member_count || 0,
+            online_members: guildData.approximate_presence_count || 0,
             premium_tier: guildData.premium_tier,
             premium_subscription_count: guildData.premium_subscription_count || 0,
             verification_level: guildData.verification_level,
@@ -70,15 +69,7 @@ export async function onRequest(context) {
             stickers_count: guildData.stickers ? guildData.stickers.length : 0,
             features: guildData.features || [],
             created_at: createdAt,
-            // Channel-Statistiken
-            channels: {
-                total: totalChannels,
-                text: textChannels,
-                voice: voiceChannels,
-                categories: categoryChannels,
-                stage: stageChannels,
-                forum: forumChannels
-            }
+            channels: channelStats
         }), {
             status: 200,
             headers: { "Content-Type": "application/json" },
