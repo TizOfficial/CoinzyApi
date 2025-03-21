@@ -12,7 +12,7 @@ export async function onRequest(context) {
     }
 
     try {
-        // Benutzer-Infos abrufen
+        // 1️⃣ Basis-User-Infos abrufen
         const userResponse = await fetch(`https://discord.com/api/v10/users/${userId}`, {
             headers: { Authorization: `Bot ${botToken}` }
         });
@@ -23,7 +23,69 @@ export async function onRequest(context) {
 
         const userData = await userResponse.json();
 
-        // Avatar & Banner URL generieren
+        // 2️⃣ Server-Infos abrufen (falls in einer Gilde)
+        let guildData = {};
+        const guildId = context.env.DISCORD_GUILD_ID; // Gilde in den ENV-Variablen setzen
+        if (guildId) {
+            const guildResponse = await fetch(`https://discord.com/api/v10/guilds/${guildId}/members/${userId}`, {
+                headers: { Authorization: `Bot ${botToken}` }
+            });
+
+            if (guildResponse.ok) {
+                guildData = await guildResponse.json();
+            }
+        }
+
+        // 3️⃣ Präsenz (Online-Status & Geräte)
+        let presenceData = {};
+        const presenceResponse = await fetch(`https://discord.com/api/v10/users/${userId}/presence`, {
+            headers: { Authorization: `Bot ${botToken}` }
+        });
+
+        if (presenceResponse.ok) {
+            presenceData = await presenceResponse.json();
+        }
+
+        // 🏆 4️⃣ BADGES: Öffentliche Flags (Staff, Hypesquad, Bug Hunter)
+        const publicFlags = userData.public_flags || 0;
+        const flagBadges = {
+            1: "Discord Staff",
+            2: "Partner",
+            4: "Hypesquad Events",
+            8: "Bug Hunter Level 1",
+            64: "Hypesquad Bravery",
+            128: "Hypesquad Brilliance",
+            256: "Hypesquad Balance",
+            512: "Early Supporter",
+            16384: "Bug Hunter Level 2",
+            131072: "Verified Bot Developer",
+            4194304: "Active Developer"
+        };
+
+        const badges = [];
+        Object.keys(flagBadges).forEach(flag => {
+            if (publicFlags & flag) {
+                badges.push(flagBadges[flag]);
+            }
+        });
+
+        // 🎟️ 5️⃣ Nitro-Status herausfinden
+        const nitroTypes = {
+            0: "Kein Nitro",
+            1: "Nitro Classic",
+            2: "Nitro"
+        };
+
+        const nitroType = guildData.premium_type ? nitroTypes[guildData.premium_type] : "Unbekannt";
+
+        // 🚀 6️⃣ Server Boost-Status (falls Gilde vorhanden)
+        let boostingSince = guildData.premium_since || null;
+
+        if (boostingSince) {
+            badges.push("Server Booster");
+        }
+
+        // 7️⃣ Avatar, Banner & andere User-Infos
         const avatarUrl = userData.avatar 
             ? `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.${userData.avatar.startsWith("a_") ? "gif" : "png"}`
             : null;
@@ -37,32 +99,17 @@ export async function onRequest(context) {
         const timestamp = parseInt(userData.id) / 4194304 + discordEpoch;
         const createdAt = new Date(timestamp).toISOString();
 
-        // User-Flags (Badges) übersetzen
-        const userFlags = {
-            1: "Discord Staff",
-            2: "Discord Partner",
-            4: "HypeSquad Events",
-            8: "Bug Hunter Level 1",
-            64: "HypeSquad Bravery",
-            128: "HypeSquad Brilliance",
-            256: "HypeSquad Balance",
-            512: "Early Supporter",
-            16384: "Bug Hunter Level 2",
-            131072: "Verified Bot Developer",
-            4194304: "Active Developer"
-        };
+        // 🔥 8️⃣ Aktivitäts- & Geräte-Daten
+        const devices = presenceData.client_status || {};
+        const activities = presenceData.activities?.map(activity => ({
+            name: activity.name,
+            type: activity.type,
+            details: activity.details || null,
+            state: activity.state || null
+        })) || [];
 
-        const badges = [];
-        if (userData.public_flags) {
-            Object.keys(userFlags).forEach(flag => {
-                if (userData.public_flags & flag) {
-                    badges.push(userFlags[flag]);
-                }
-            });
-        }
-
-        // Basis-Infos für die Antwort
-        const result = {
+        // 9️⃣ Finale JSON-Antwort
+        return new Response(JSON.stringify({
             id: userData.id,
             username: userData.username,
             discriminator: userData.discriminator,
@@ -73,52 +120,13 @@ export async function onRequest(context) {
             banner_url: bannerUrl,
             accent_color: userData.accent_color || null,
             created_at: createdAt,
-            badges: badges.length > 0 ? badges : undefined
-        };
-
-        // Gilden-spezifische Infos abrufen (wenn Bot in einer bestimmten Gilde ist)
-        const guildId = context.env.DISCORD_GUILD_ID; // In Cloudflare ENV setzen
-        if (guildId) {
-            const memberResponse = await fetch(`https://discord.com/api/v10/guilds/${guildId}/members/${userId}`, {
-                headers: { Authorization: `Bot ${botToken}` }
-            });
-
-            if (memberResponse.ok) {
-                const memberData = await memberResponse.json();
-                
-                // Nitro & Boost Infos nur hinzufügen, wenn sie existieren
-                if (memberData.premium_type) result.nitro_type = memberData.premium_type;
-                if (memberData.premium_since) result.boosting_since = memberData.premium_since;
-
-                // Rollen anzeigen (nur IDs, da Namen API-intensiver wären)
-                if (memberData.roles.length > 0) result.roles = memberData.roles;
-            }
-        }
-
-        // Präsenzstatus abrufen
-        const presenceResponse = await fetch(`https://discord.com/api/v10/users/${userId}/presence`, {
-            headers: { Authorization: `Bot ${botToken}` }
-        });
-
-        if (presenceResponse.ok) {
-            const presenceData = await presenceResponse.json();
-            result.presence = presenceData.status || "offline";
-
-            // Geräte anzeigen (PC, Mobile, Web)
-            result.devices = presenceData.client_status ? presenceData.client_status : {};
-            
-            // Aktivität abrufen (z. B. spielt ein Spiel, hört Spotify)
-            if (presenceData.activities && presenceData.activities.length > 0) {
-                result.activities = presenceData.activities.map(activity => ({
-                    name: activity.name,
-                    type: activity.type,
-                    details: activity.details || null,
-                    state: activity.state || null
-                }));
-            }
-        }
-
-        return new Response(JSON.stringify(result, null, 2), {
+            badges: badges.length > 0 ? badges : undefined,
+            nitro_type: nitroType,
+            boosting_since: boostingSince,
+            presence: presenceData.status || "offline",
+            devices: devices,
+            activities: activities
+        }, null, 2), {
             status: 200,
             headers: { "Content-Type": "application/json" },
         });
