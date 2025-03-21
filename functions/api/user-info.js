@@ -6,14 +6,13 @@ export async function onRequest(context) {
         return new Response(JSON.stringify({ error: "user_id erforderlich." }), { status: 400 });
     }
 
-    // Bot-Token aus Cloudflare-Umgebung abrufen
     const botToken = context.env.DISCORD_BOT_TOKEN;
     if (!botToken) {
         return new Response(JSON.stringify({ error: "Bot-Token nicht konfiguriert." }), { status: 500 });
     }
 
     try {
-        // Benutzer-Info abrufen
+        // Benutzer-Infos abrufen
         const userResponse = await fetch(`https://discord.com/api/v10/users/${userId}`, {
             headers: { Authorization: `Bot ${botToken}` }
         });
@@ -24,18 +23,16 @@ export async function onRequest(context) {
 
         const userData = await userResponse.json();
 
-        // Avatar-URL erstellen
+        // Avatar & Banner URL generieren
         const avatarUrl = userData.avatar 
             ? `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.${userData.avatar.startsWith("a_") ? "gif" : "png"}`
             : null;
 
-        // Banner-URL abrufen
-        let bannerUrl = null;
-        if (userData.banner) {
-            bannerUrl = `https://cdn.discordapp.com/banners/${userData.id}/${userData.banner}.${userData.banner.startsWith("a_") ? "gif" : "png"}`;
-        }
+        const bannerUrl = userData.banner 
+            ? `https://cdn.discordapp.com/banners/${userData.id}/${userData.banner}.${userData.banner.startsWith("a_") ? "gif" : "png"}`
+            : null;
 
-        // Discord-Snowflake ID in Datum umrechnen
+        // Discord Snowflake → Erstellungsdatum
         const discordEpoch = 1420070400000;
         const timestamp = parseInt(userData.id) / 4194304 + discordEpoch;
         const createdAt = new Date(timestamp).toISOString();
@@ -64,17 +61,8 @@ export async function onRequest(context) {
             });
         }
 
-        // Guild-Member Infos abrufen (Präsenz, Nitro, Boosts)
-        const memberResponse = await fetch(`https://discord.com/api/v10/guilds/YOUR_GUILD_ID/members/${userId}`, {
-            headers: { Authorization: `Bot ${botToken}` }
-        });
-
-        let memberData = {};
-        if (memberResponse.ok) {
-            memberData = await memberResponse.json();
-        }
-
-        return new Response(JSON.stringify({
+        // Basis-Infos für die Antwort
+        const result = {
             id: userData.id,
             username: userData.username,
             discriminator: userData.discriminator,
@@ -85,15 +73,52 @@ export async function onRequest(context) {
             banner_url: bannerUrl,
             accent_color: userData.accent_color || null,
             created_at: createdAt,
-            badges: badges,
-            nitro_type: memberData.premium_type || 0,
-            boosting_since: memberData.premium_since || null,
-            presence: memberData.presence || "Unknown",
-            mfa_enabled: userData.mfa_enabled || false,
-            locale: userData.locale || "Unknown",
-            verified: userData.verified || false,
-            email: userData.email || "Nicht verfügbar"
-        }), {
+            badges: badges.length > 0 ? badges : undefined
+        };
+
+        // Gilden-spezifische Infos abrufen (wenn Bot in einer bestimmten Gilde ist)
+        const guildId = context.env.DISCORD_GUILD_ID; // In Cloudflare ENV setzen
+        if (guildId) {
+            const memberResponse = await fetch(`https://discord.com/api/v10/guilds/${guildId}/members/${userId}`, {
+                headers: { Authorization: `Bot ${botToken}` }
+            });
+
+            if (memberResponse.ok) {
+                const memberData = await memberResponse.json();
+                
+                // Nitro & Boost Infos nur hinzufügen, wenn sie existieren
+                if (memberData.premium_type) result.nitro_type = memberData.premium_type;
+                if (memberData.premium_since) result.boosting_since = memberData.premium_since;
+
+                // Rollen anzeigen (nur IDs, da Namen API-intensiver wären)
+                if (memberData.roles.length > 0) result.roles = memberData.roles;
+            }
+        }
+
+        // Präsenzstatus abrufen
+        const presenceResponse = await fetch(`https://discord.com/api/v10/users/${userId}/presence`, {
+            headers: { Authorization: `Bot ${botToken}` }
+        });
+
+        if (presenceResponse.ok) {
+            const presenceData = await presenceResponse.json();
+            result.presence = presenceData.status || "offline";
+
+            // Geräte anzeigen (PC, Mobile, Web)
+            result.devices = presenceData.client_status ? presenceData.client_status : {};
+            
+            // Aktivität abrufen (z. B. spielt ein Spiel, hört Spotify)
+            if (presenceData.activities && presenceData.activities.length > 0) {
+                result.activities = presenceData.activities.map(activity => ({
+                    name: activity.name,
+                    type: activity.type,
+                    details: activity.details || null,
+                    state: activity.state || null
+                }));
+            }
+        }
+
+        return new Response(JSON.stringify(result, null, 2), {
             status: 200,
             headers: { "Content-Type": "application/json" },
         });
